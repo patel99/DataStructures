@@ -112,4 +112,24 @@ public class BST<T> {
             }
         }
     }
+
+    public void printPreOrderIterative(){
+        if(this.root == null) return;
+        Stack<Node> stack = new Stack<>();
+        Node current = this.root;
+        while(current!= null){
+            stack.push(current);
+            System.out.println(current.data);
+            current = current.left;
+        }
+        while(!stack.empty()){
+            Node visitingNode = stack.pop();
+            current = visitingNode.right;
+            while(current != null){
+                stack.push(current);
+                System.out.println(current.data);
+                current = current.left;
+            }
+        }
+    }
 }
