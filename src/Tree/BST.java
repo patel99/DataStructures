@@ -1,6 +1,7 @@
 package Tree;
 
 import java.util.Comparator;
+import java.util.Stack;
 
 /**
  * Created by Pratik on 2/26/2016.
@@ -91,5 +92,24 @@ public class BST<T> {
         System.out.println(current.data);
         printPreOrder_Aux(current.left);
         printPreOrder_Aux(current.right);
+    }
+
+    public void printInOrderIterative(){
+        if(this.root == null) return;
+        Stack<Node> stack = new Stack<>();
+        Node current = this.root;
+        while(current!= null){
+            stack.push(current);
+            current = current.left;
+        }
+        while(!stack.empty()){
+            Node visitingNode = stack.pop();
+            System.out.println(visitingNode.data);
+            current = visitingNode.right;
+            while(current != null){
+                stack.push(current);
+                current = current.left;
+            }
+        }
     }
 }
