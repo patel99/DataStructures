@@ -1,9 +1,6 @@
 package Graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 
 public class Graph {
@@ -37,7 +34,7 @@ public class Graph {
         return true;
     }
 
-    private static HashMap<V,Integer> isVisited = new HashMap<>();
+    private static Map<V,Integer> isVisited = new HashMap<>();
     public void DFS_Vertex(V vertex) {
         if(!isVisited.containsKey(vertex)) {
             System.out.println(vertex.data);
@@ -53,9 +50,43 @@ public class Graph {
         Iterator<V> vertex = vertices.iterator();
         while(vertex.hasNext()){
             V temp = vertex.next();
-           if(!isVisited.containsKey(temp)){
+            if(!isVisited.containsKey(temp)){
                 DFS_Vertex(temp);
             }
         }
+        isVisited.clear();
+    }
+
+    private static Queue<V> queue = new LinkedList<>();
+    public void BFS_Vertex(V vertex){
+        if(!isVisited.containsKey(vertex)){
+            System.out.println(vertex.data);
+            isVisited.put(vertex,1);
+            queue.add(vertex);
+            while (!queue.isEmpty()){
+                V temp = queue.poll();
+
+                Iterator<V> adjIterator = temp.adj.iterator();
+                while (adjIterator.hasNext()){
+                    V adj = adjIterator.next();
+                    if(!isVisited.containsKey(adj)){
+                        System.out.println(adj.data);
+                        isVisited.put(adj,1);
+                        queue.add(adj);
+                    }
+                }
+            }
+        }
+    }
+
+    public void BFS_Graph(){
+        Iterator<V> vertex = vertices.iterator();
+        while(vertex.hasNext()){
+            V temp = vertex.next();
+            if(!isVisited.containsKey(temp)){
+                BFS_Vertex(temp);
+            }
+        }
+        isVisited.clear();
     }
 }
