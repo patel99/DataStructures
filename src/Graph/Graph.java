@@ -46,6 +46,10 @@ public class Graph {
         }
     }
 
+    public void clearVisited(){
+        isVisited.clear();
+    }
+
     public void DFS_Graph(){
         Iterator<V> vertex = vertices.iterator();
         while(vertex.hasNext()){
