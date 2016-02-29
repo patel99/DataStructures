@@ -1,11 +1,7 @@
 package Tree;
 
-import java.util.Comparator;
 import java.util.Stack;
 
-/**
- * Created by Pratik on 2/26/2016.
- */
 public class BST<T> {
     public Node root;
 
@@ -132,4 +128,66 @@ public class BST<T> {
             }
         }
     }
+
+    public void printPostOrderIterative(){
+        if(this.root == null) return;
+        Stack<Node> stack = new Stack<>();
+        Node current = this.root;
+        do {
+            while (current != null){
+                if(current.right != null){
+                    stack.push(current.right);
+                    stack.push(current);
+                    current = current.left;
+                }
+                else {
+                    stack.push(current);
+                    current = current.left;
+                }
+            }
+            Node poped = stack.pop();
+            if(poped.right != null && !stack.isEmpty() && poped.right == stack.peek()){
+                stack.pop();
+                stack.push(poped);
+                current = poped.right;
+            }
+            else {
+                System.out.println(poped.data);
+                current = null;
+            }
+        }while (!stack.isEmpty());
+    }
+
+    public T minValue(Node current)
+    {
+        T minv = (T)current.data;
+        while (current.left != null)
+        {
+            minv = (T)current.left.data;
+            current = current.left;
+        }
+        return minv;
+    }
+
+    public void deleteKey(T key){
+        this.root = deleteKey_Aux(this.root, key);
+    }
+
+    private Node deleteKey_Aux(Node current, T key){
+        if(current == null) return current;
+        if(((Comparable)key).compareTo(current.data)<0){
+            current.left = deleteKey_Aux(current.left,key);
+        } else if(((Comparable)key).compareTo(current.data)>0){
+            current.right = deleteKey_Aux(current.right,key);
+        }
+        else{ // match found
+            if(current.left == null) return current.right;
+            else if(current.right == null) return current.left;
+            current.data = minValue(current.right);
+            current.right = deleteKey_Aux(current.right, (T)current.data);
+        }
+
+        return current;
+    }
+
 }
