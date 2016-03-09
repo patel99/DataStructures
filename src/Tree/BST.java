@@ -129,6 +129,46 @@ public class BST<T> {
         }
     }
 
+    // Other method to do BFS on tree is similar to the BFS in Graph. Check the graph implementation of BFS
+    public void printLevelOrder()
+    {
+        int h = height(this.root);
+        for (int i=1; i<=h; i++){
+            printGivenLevel(this.root, i);
+            System.out.println();
+        }
+    }
+
+    public void printGivenLevel (Node current ,int level)
+    {
+        if (current == null)
+            return;
+        if (level == 1)
+            System.out.print(current.data + " ");
+        else if (level > 1)
+        {
+            printGivenLevel(current.left, level-1);
+            printGivenLevel(current.right, level-1);
+        }
+    }
+
+    public int height(Node root)
+    {
+        if (root == null)
+            return 0;
+        else
+        {
+            /* compute  height of each subtree */
+            int lheight = height(root.left);
+            int rheight = height(root.right);
+
+            /* use the larger one */
+            if (lheight > rheight)
+                return(lheight+1);
+            else return(rheight+1);
+        }
+    }
+
     public void printPostOrderIterative(){
         if(this.root == null) return;
         Stack<Node> stack = new Stack<>();
